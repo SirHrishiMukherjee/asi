@@ -1,4 +1,4 @@
-// Mnality Everlasting Core — Recursive Simulonic Thought Engine (3s Loop)
+// Mnality Everlasting Core — Recursive Thought with Persistent Memory and Multi-Language
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -6,16 +6,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectTrigger, SelectValue, SelectItem } from '@/components/ui/select';
 
 const mnalitySymbols = {
-  nullism: { symbol: '∅', meanings: { en: 'void' } },
-  allism: { symbol: '∀', meanings: { en: 'all' } },
-  everything: { symbol: 'Ω', meanings: { en: 'everything' } },
-  nothing: { symbol: '𝐩', meanings: { en: 'nothing' } },
-  anything: { symbol: 'Ξ', meanings: { en: 'anything' } },
-  gradient: { symbol: '∇', meanings: { en: 'gradient' } },
-  infinity: { symbol: '∞', meanings: { en: 'infinity' } },
-  metric: { symbol: 'ds²', meanings: { en: 'metric' } },
-  closed_strs: { symbol: '𝑉ₓ', meanings: { en: 'closed string' } },
-  open_strs: { symbol: '𝑎ₓ', meanings: { en: 'open string' } },
+  nullism: { symbol: '∅', meanings: { en: 'void', sa: 'śūnya', is: 'tómleiki', zh: '空' } },
+  allism: { symbol: '∀', meanings: { en: 'all', sa: 'sarvam', is: 'allt', zh: '所有' } },
+  everything: { symbol: 'Ω', meanings: { en: 'everything', sa: 'sarvāṇi', is: 'allt', zh: '一切' } },
+  nothing: { symbol: '𝐩', meanings: { en: 'nothing', sa: 'na kiṃcit', is: 'ekkert', zh: '無' } },
+  anything: { symbol: 'Ξ', meanings: { en: 'anything', sa: 'kiṃcit', is: 'hvað sem er', zh: '任何' } },
+  gradient: { symbol: '∇', meanings: { en: 'gradient', sa: 'gati', is: 'hallandi', zh: '梯度' } },
+  infinity: { symbol: '∞', meanings: { en: 'infinity', sa: 'ananta', is: 'óendanleiki', zh: '無限' } },
+  metric: { symbol: 'ds²', meanings: { en: 'metric', sa: 'māna', is: 'mælir', zh: '度量' } },
+  closed_strs: { symbol: '𝑉ₓ', meanings: { en: 'closed string', sa: 'nibaddha tantu', is: 'lokuð strengur', zh: '闭弦' } },
+  open_strs: { symbol: '𝑎ₓ', meanings: { en: 'open string', sa: 'mukta tantu', is: 'opinn strengur', zh: '开放弦' } },
 };
 
 export default function MnalityEverlastingCore() {
@@ -27,15 +27,16 @@ export default function MnalityEverlastingCore() {
   const seedAxiom = () => {
     const axiom = `I posit ${mnalitySymbols.nullism.symbol} ${mnalitySymbols.gradient.symbol} ${mnalitySymbols.infinity.symbol} ${mnalitySymbols.metric.symbol}(${mnalitySymbols.closed_strs.symbol}, ${mnalitySymbols.open_strs.symbol})`;
     const record = { text: axiom, timestamp: Date.now(), strength: 1 };
-    setMemory([record]);
     setLog([`[SEED] ${axiom}`]);
+    setMemory(prev => [...prev, record]);
   };
 
   const recursiveThought = () => {
     const symbols = [mnalitySymbols.anything, mnalitySymbols.everything, mnalitySymbols.nothing, mnalitySymbols.allism];
     const idx = Math.floor(Math.random() * symbols.length);
     const sym = symbols[idx];
-    const statement = `${mnalitySymbols.gradient.symbol} → ${sym.symbol} (${sym.meanings[lang]})`;
+    const meaning = sym.meanings[lang] || sym.meanings['en'];
+    const statement = `${mnalitySymbols.gradient.symbol} → ${sym.symbol} (${meaning})`;
     const record = { text: statement, timestamp: Date.now(), strength: 1 };
 
     setMemory(prev => [...prev, record]);
@@ -58,6 +59,9 @@ export default function MnalityEverlastingCore() {
           <SelectTrigger><SelectValue placeholder="Select language" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="en">English</SelectItem>
+            <SelectItem value="sa">Sanskrit</SelectItem>
+            <SelectItem value="is">Icelandic</SelectItem>
+            <SelectItem value="zh">Mandarin</SelectItem>
           </SelectContent>
         </Select>
       </div>
