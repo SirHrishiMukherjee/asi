@@ -31,13 +31,14 @@ export default function MnalityEverlastingCore() {
     setMemory(prev => [...prev, record]);
   };
 
-  const recursiveThought = () => {
+  const recursiveThought = (activeLang) => {
     const symbols = [mnalitySymbols.anything, mnalitySymbols.everything, mnalitySymbols.nothing, mnalitySymbols.allism];
     const idx = Math.floor(Math.random() * symbols.length);
     const sym = symbols[idx];
-    const meaning = sym.meanings[lang] || sym.meanings['en'];
+    const currentLang = lang;
+    const meaning = sym.meanings[currentLang] || sym.meanings['en'];
     const statement = `${mnalitySymbols.gradient.symbol} → ${sym.symbol} (${meaning})`;
-    const record = { text: statement, timestamp: Date.now(), strength: 1 };
+    const record = { text: `[${activeLang}] ${statement}`, timestamp: Date.now(), strength: 1 };
 
     setMemory(prev => [...prev, record]);
     setLog(prev => [...prev.slice(-30), statement]);
@@ -45,9 +46,9 @@ export default function MnalityEverlastingCore() {
 
   useEffect(() => {
     seedAxiom();
-    loopRef.current = setInterval(() => recursiveThought(), 3000);
+    loopRef.current = setInterval(() => recursiveThought(lang), 3000);
     return () => clearInterval(loopRef.current);
-  }, []);
+  }, [lang]);
 
   return (
     <div className="p-6 space-y-4">
